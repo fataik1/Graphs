@@ -13,42 +13,75 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        #pass  # TODO
+        self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        #pass  # TODO
+        self.vertices[v1].add(v2)
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        #pass  # TODO
+        return self.vertices[vertex_id]
 
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        #pass  # TODO
+        visited =set()
+        q = Queue()
+        q.enqueue(starting_vertex)
+        
+        while q.size() > 0:
+            vertex = q.dequeue()
+            if vertex not in visited:
+                print(vertex)
+                visited.add(vertex)
+
+            for edge in self.vertices[vertex]:
+                if edge not in visited:
+                    q.enqueue(edge)
+
+        return visited
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        #pass  # TODO
+        visited = set()
+        stack = Stack()
+        stack.push(starting_vertex)
 
-    def dft_recursive(self, starting_vertex):
+        while stack.size() > 0:
+            vertex = stack.pop()
+            if vertex not in visited:
+                print(vertex)
+                visited.add(vertex)
+
+            for edge in self.vertices[vertex]:
+                if edge not in visited:
+                    stack.push(edge)
+        return visited
+
+    def dft_recursive(self, starting_vertex, cache=None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        pass  # TODO
+        #pass  # TODO
+        
 
     def bfs(self, starting_vertex, destination_vertex):
         """

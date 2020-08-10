@@ -1,0 +1,25 @@
+Graph Terminology 
+-----------------
+Nodes/Vertexes/vertices -- the data components of the Graph
+Edges -- the connections between the Nodes
+
+Directed vs undirected graphs
+
+Directed graps have one-way Edges
+Undirected graphs all edges are two-way
+
+Cyclic - there is at least one "loop"
+Acyclic - there are no loops at all
+
+Dense Graphs - high ratio of edges to nodes,, nodes are connected to many other nodes
+SParse Graphs - nodes are connected to few other nodes
+
+Weighted Graphs - edges have associated weights
+Unweighted - edges do not, are all the same weights
+
+
+Graph Representations
+----------------------
+
+Adjacency Matrix:
+    
