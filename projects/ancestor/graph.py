@@ -1,7 +1,33 @@
+
 """
 Simple graph implementation
 """
-from util import Stack, Queue  # These may come in handy
+# Note: This Queue class is sub-optimal. Why?
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
+
+class Stack():
+    def __init__(self):
+        self.stack = []
+    def push(self, value):
+        self.stack.append(value)
+    def pop(self):
+        if self.size() > 0:
+            return self.stack.pop()
+        else:
+            return None
+    def size(self):
+        return len(self.stack)
 
 class Graph:
 
@@ -21,7 +47,7 @@ class Graph:
         """
         if v1 in self.vertices and v2 in self.vertices:
             self.vertices[v1].add(v2)  # there's an edge from v1 to v2
-            
+
         else:
             raise IndexError("nonexistent vert")
 
@@ -41,10 +67,12 @@ class Graph:
         q = Queue()
         # create a set to store the visited nodes
         visited = set()
-        
+
         # Init: enqueue the starting node
         q.enqueue(starting_vertex)
-        
+
+        whatishappening = []
+
         # while queue isn't empty
         while q.size() > 0:
             # dequeue first item
@@ -53,10 +81,15 @@ class Graph:
             if v not in visited:
                 # mark as visited (i.e. add to the visited set)
                 visited.add(v)
-                print(v)
+                # print(v)
+                whatishappening.append(v)
                 # add all the neighbors to the queue
                 for next_vert in self.get_neighbors(v):
                     q.enqueue(next_vert)
+
+
+
+        return whatishappening
 
     def dft(self, starting_vertex):
         """
@@ -67,10 +100,10 @@ class Graph:
         s = Stack()
         # create a set to store the visited nodes
         visited = set()
-        
+
         # Init: push the starting node
         s.push(starting_vertex)
-        
+
         # while stack isn't empty
         while s.size() > 0:
             # pop first item
@@ -96,12 +129,12 @@ class Graph:
             visited.add(starting_vertex)
             # print the vertex
             print(starting_vertex)
-            
+
             # for each of its neighbors
             for neighbor in self.get_neighbors(starting_vertex):
                 # recurse on the neighbor
                 self.dft_recursive(neighbor, visited)
-            
+
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -112,10 +145,10 @@ class Graph:
         # Create an empty queue and enqueue A PATH TO the starting vertex
         q = Queue()
         q.enqueue([starting_vertex])
-        
+
         # Create a Set to store visited vertices
         visited = set()
-        
+
         # While the queue is not empty...
         while q.size() > 0:
             # Dequeue the first PATH
@@ -137,7 +170,7 @@ class Graph:
                   # APPEND THE NEIGHBOR TO THE BACK
                   new_path.append(neighbor)
                   q.enqueue(new_path)
-        
+
         # if we get here, we didn't find the destination vertex      
         return None
 
@@ -150,10 +183,10 @@ class Graph:
         # create an empty Stack and push A PATH TO the starting vertex
         s = Stack()
         s.push([starting_vertex])
-        
+
         # create a set to store visisted vertices
         visited = set()
-        
+
         # while the stack is not empty...
         while s.size() > 0:
             # pop the first PATH
@@ -175,8 +208,8 @@ class Graph:
                     # APPEND THE NEIGHBOR TO THE BACK
                     new_path.append(neighbor)
                     s.push(new_path)
-        
-        
+
+
     def dfs_recursive(self, starting_vertex, destination_vertex, visited=set(), path=[]):
         """
         Return a list containing a path from
@@ -186,14 +219,14 @@ class Graph:
         """
         # mark starting vertex as visited
         visited.add(starting_vertex)
-        
+
         # set PATH
         path = path + [starting_vertex]
-        
+
         # if vertex matches what we want, return the path
         if starting_vertex == destination_vertex:
             return path
-        
+
         # loop throuh vertex neighbors
         for neighbor in self.get_neighbors(starting_vertex):
             # if it has not been visited
@@ -202,7 +235,7 @@ class Graph:
                 new_path = self.dfs_recursive(neighbor, destination_vertex, visited, path)
                 if new_path is not None:
                     return new_path
-                
+
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
