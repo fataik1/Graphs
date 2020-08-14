@@ -1,0 +1,66 @@
+Graphs Terminology
+------------------
+
+Nodes/Vertexes/Vertices -- the data components of the graph
+Edges -- the connections between nodes
+
+Directed vs undirected graphs
+Directed graphs have one-way edges
+Undirected, all edges are two-way
+
+Cyclic - there is at least one "loop"
+Acyclic - there are no loops at all
+
+Dense Graphs - high ratio of edges to nodes, nodes are connected to many other nodes
+Sparse Graphs - nodes are connected to few other nodes
+Weighted Graphs - edges have associated weights
+
+Unweighted - edges do not, are all the same weight
+
+Graph Represenations
+--------------------
+Adjacency Matrix:
+   A  B  C  E
+A  f  T  T  T
+B  f  f  f  T
+C  f  f  T  f
+E  f  f  f  f
+   A  B  C  E
+A  0  5  1  2
+B  0  0  0  8
+C  0  0  0  0
+E  0  0  0  0
+Adjacency List:
+A: [B, C, E]
+B: [E]
+C: [C]
+E: []
+Breadth-First Traversal:
+Init: add starting node to the queue
+While queue is not empty:
+    Deque a node
+    If visited, ignore it
+    Else:
+        add all node's neighbors to the queue
+        mark node as visited
+Depth-First Traversal:
+Same thing, except a stack instead of a queue
+Breadth-first search:
+Instead of just queueing nodes to visit, enqueue the entire path taken
+so far to get to that node.
+Once the target is found, return the path.
+def bfs(self, starting_vertex_id, target_vertex_id):
+    # Create an empty queue and enqueue A PATH TO the starting vertex ID
+    # Create a Set to store visited vertices
+    # While the queue is not empty...
+        # Dequeue the first PATH
+        # Grab the last vertex from the PATH
+        # If that vertex has not been visited...
+            # CHECK IF IT'S THE TARGET
+              # IF SO, RETURN PATH
+            # Mark it as visited...
+            # Then add A PATH TO its neighbors to the back of the queue
+              # COPY THE PATH
+              # APPEND THE NEIGHOR TO THE BACK
+Depth-first search:
+Same as breadth-first search, except with a stack instead of a queue.

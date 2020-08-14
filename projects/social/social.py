@@ -1,6 +1,12 @@
+# Imports
+from util import Queue
+import random
+
+
 class User:
     def __init__(self, name):
         self.name = name
+
 
 class SocialGraph:
     def __init__(self):
@@ -14,7 +20,10 @@ class SocialGraph:
         """
         if user_id == friend_id:
             print("WARNING: You cannot be friends with yourself")
-        elif friend_id in self.friendships[user_id] or user_id in self.friendships[friend_id]:
+        elif (
+            friend_id in self.friendships[user_id]
+            or user_id in self.friendships[friend_id]
+        ):
             print("WARNING: Friendship already exists")
         else:
             self.friendships[user_id].add(friend_id)
@@ -32,10 +41,8 @@ class SocialGraph:
         """
         Takes a number of users and an average number of friendships
         as arguments
-
         Creates that number of users and a randomly distributed friendships
         between those users.
-
         The number of users must be greater than the average number of friendships.
         """
         # Reset graph
@@ -45,24 +52,42 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
+        for user in range(1, num_users + 1):
+            self.add_user(user)
 
         # Create friendships
+        for i in self.users:
+            f = list(self.users)
+            f.remove(i)
+            random.shuffle(f)
+            friends = f[:avg_friendships]
+            for friend in friends:
+                if i < friend:
+                    self.add_friendship(i, friend)
 
     def get_all_social_paths(self, user_id):
         """
         Takes a user's user_id as an argument
-
         Returns a dictionary containing every user in that user's
         extended network with the shortest friendship path between them.
-
         The key is the friend's ID and the value is the path.
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+        queue = [user_id]
+        visited[user_id] = [user_id]
+        while len(queue) > 0:
+            node = queue.pop()
+            friends_node = self.friendships[node]
+            for fr in friends_node:
+                if fr not in visited:
+                    visited[fr] = visited[node] + [fr]
+                    queue.append(fr)
+
         return visited
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sg = SocialGraph()
     sg.populate_graph(10, 2)
     print(sg.friendships)
